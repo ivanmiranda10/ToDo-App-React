@@ -1,7 +1,11 @@
 import { ADD_TODO, DELETE_TODO } from "../Actions";
 
+const toDosFromLocalStorage = JSON.parse(
+  localStorage.getItem("localToDos") || "[]"
+);
+
 const initialState = {
-  toDos: [],
+  toDos: toDosFromLocalStorage,
 };
 
 const toDos = (state = initialState, action) => {
