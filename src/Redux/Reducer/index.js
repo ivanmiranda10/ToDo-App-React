@@ -1,4 +1,4 @@
-import { ADD_TODO, DELETE_TODO, UPDATE_TODO } from "../Actions";
+import { ADD_TODO, DELETE_TODO, UPDATE_TODO, COMPLETE_TODO } from "../Actions";
 
 const toDosFromLocalStorage = JSON.parse(
   localStorage.getItem("localToDos") || "[]"
@@ -25,6 +25,15 @@ const toDos = (state = initialState, action) => {
         ...state,
         toDos: state.toDos.map((el) =>
           el.id === action.payload.id ? action.payload : el
+        ),
+      };
+    case COMPLETE_TODO:
+      return {
+        ...state,
+        toDos: state.toDos.map((toDo) =>
+          toDo.id === action.payload
+            ? { ...toDo, completed: !toDo.completed }
+            : toDo
         ),
       };
     default:

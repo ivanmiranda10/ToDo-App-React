@@ -30,6 +30,15 @@ const Home = () => {
               })
             : null}
         </div>
+        <div>
+          <h4>
+            {listOfToDos.length
+              ? `${
+                  listOfToDos.filter((el) => !el.completed).length
+                } tasks to finish`
+              : "No tasks around here"}
+          </h4>
+        </div>
       </div>
     </>
   );
