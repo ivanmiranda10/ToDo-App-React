@@ -1,16 +1,32 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addToDo } from "./Redux/Actions";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addToDo, updateToDo } from "./Redux/Actions";
 
-const AddTodo = () => {
+const AddTodo = ({ currentId, setCurrentId }) => {
+  const oneToDo = useSelector((state) =>
+    currentId ? state.toDos.find((el) => el.id === currentId) : null
+  );
   const dispatch = useDispatch();
 
   const [toDo, setToDo] = useState("");
 
+  useEffect(() => {
+    if (oneToDo) setToDo(oneToDo.toDo);
+  }, [oneToDo]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(addToDo(toDo));
+    if (currentId) {
+      dispatch(updateToDo(currentId, toDo));
+    } else {
+      dispatch(addToDo(toDo));
+    }
+    clear();
+  };
+
+  const clear = () => {
     setToDo("");
+    setCurrentId(null);
   };
 
   return (
@@ -23,7 +39,7 @@ const AddTodo = () => {
           value={toDo}
           onChange={(e) => setToDo(e.target.value)}
         />
-        <button type="submit">Create</button>
+        <button type="submit">{currentId ? "Update" : "Create"}</button>
       </form>
     </div>
   );

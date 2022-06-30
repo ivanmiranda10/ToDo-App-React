@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux/es/exports";
 import { deleteToDo } from "./Redux/Actions";
 
-const TodoItem = ({ item }) => {
+const TodoItem = ({ item, setCurrentId }) => {
   const dispatch = useDispatch();
   const handleDelete = () => {
     dispatch(deleteToDo(item.id));
@@ -11,6 +11,7 @@ const TodoItem = ({ item }) => {
     <div>
       <span>{item.toDo}</span>
       <button onClick={handleDelete}>❌</button>
+      <button onClick={() => setCurrentId(item.id)}>✏️</button>
     </div>
   );
 };
