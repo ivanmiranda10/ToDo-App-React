@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import AddTodo from "../addTodo";
 import TodoItem from "../todoItem";
+import Navbar from "../navbar";
 
 const Home = () => {
   const [currentId, setCurrentId] = useState(null);
+  const [filter, setFilter] = useState("all");
+
   const listOfToDos = useSelector((state) => state.toDos);
 
   useEffect(() => {
@@ -16,9 +19,10 @@ const Home = () => {
     <>
       <div>
         <h1>To-Do App</h1>
+        <Navbar setFilter={setFilter} />
         <AddTodo currentId={currentId} setCurrentId={setCurrentId} />
         <div>
-          {listOfToDos.length >= 1
+          {listOfToDos.length >= 1 && filter === "all"
             ? listOfToDos.map((elem) => {
                 return (
                   <TodoItem
@@ -26,6 +30,32 @@ const Home = () => {
                     item={elem}
                     setCurrentId={setCurrentId}
                   />
+                );
+              })
+            : null}
+          {listOfToDos.length >= 1 && filter === "completed"
+            ? listOfToDos.map((elem) => {
+                return (
+                  elem.completed && (
+                    <TodoItem
+                      key={elem.id}
+                      item={elem}
+                      setCurrentId={setCurrentId}
+                    />
+                  )
+                );
+              })
+            : null}
+          {listOfToDos.length >= 1 && filter === "uncompleted"
+            ? listOfToDos.map((elem) => {
+                return (
+                  !elem.completed && (
+                    <TodoItem
+                      key={elem.id}
+                      item={elem}
+                      setCurrentId={setCurrentId}
+                    />
+                  )
                 );
               })
             : null}

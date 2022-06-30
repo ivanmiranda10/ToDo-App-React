@@ -4,6 +4,8 @@ export const ADD_TODO = "ADD_TODO";
 export const DELETE_TODO = "DELETE_TODO";
 export const UPDATE_TODO = "UPDATE_TODO";
 export const COMPLETE_TODO = "COMPLETE_TODO";
+export const CLEAR_COMPLETED = "CLEAR_COMPLETED";
+export const CLEAR_ALL = "CLEAR_ALL";
 
 export const addToDo = (toDo) => {
   console.log("addToDo Action: ", toDo);
@@ -40,3 +42,11 @@ export const completeTodo = (id) => {
     payload: id,
   };
 };
+
+export const clearCompleted = () => ({
+  type: CLEAR_COMPLETED,
+});
+
+export const clearAll = () => ({
+  type: CLEAR_ALL,
+});
