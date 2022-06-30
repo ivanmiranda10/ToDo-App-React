@@ -1,6 +1,7 @@
 import { nanoid } from "@reduxjs/toolkit";
 
 export const ADD_TODO = "ADD_TODO";
+export const DELETE_TODO = "DELETE_TODO";
 
 export const addToDo = (toDo) => {
   console.log("addToDo Action: ", toDo);
@@ -11,5 +12,13 @@ export const addToDo = (toDo) => {
       toDo,
       completed: false,
     },
+  };
+};
+
+export const deleteToDo = (id) => {
+  console.log("deleteToDo Action: ", id);
+  return {
+    type: DELETE_TODO,
+    payload: id,
   };
 };

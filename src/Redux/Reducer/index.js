@@ -1,4 +1,4 @@
-import { ADD_TODO } from "../Actions";
+import { ADD_TODO, DELETE_TODO } from "../Actions";
 
 const initialState = {
   toDos: [],
@@ -10,6 +10,11 @@ const toDos = (state = initialState, action) => {
       return {
         ...state,
         toDos: [...state.toDos, action.payload],
+      };
+    case DELETE_TODO:
+      return {
+        ...state,
+        toDos: state.toDos.filter((elem) => elem.id !== action.payload),
       };
     default:
       return state;
