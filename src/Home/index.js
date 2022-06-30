@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import AddTodo from "../addTodo";
 import TodoItem from "../todoItem";
 import Navbar from "../navbar";
+import LogoutButton from "../Firabase/Logout";
 
 const Home = () => {
   const [currentId, setCurrentId] = useState(null);
@@ -18,6 +19,7 @@ const Home = () => {
   return (
     <>
       <div>
+        <LogoutButton />
         <h1>To-Do App</h1>
         <Navbar setFilter={setFilter} />
         <AddTodo currentId={currentId} setCurrentId={setCurrentId} />
