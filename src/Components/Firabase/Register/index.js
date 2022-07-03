@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import useRegister from "./useRegister";
 
 const Register = () => {
@@ -9,6 +10,12 @@ const Register = () => {
     handleLoginSubmit,
   } = useRegister();
   const [logged, setLogged] = useState(false);
+
+  const listOfUsers = useSelector((state) => state.users);
+  useEffect(() => {
+    console.log("Users Login Page: ", listOfUsers);
+  }, []);
+
   return (
     <div>
       <form onSubmit={!logged ? handleRegisterSubmit : handleLoginSubmit}>

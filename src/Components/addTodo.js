@@ -1,31 +1,46 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToDo, updateToDo } from "./Redux/Actions";
+import { addToDo, getToDosByUser, updateToDo } from "./Redux/Actions";
 
-const AddTodo = ({ currentId, setCurrentId }) => {
+const AddTodo = ({ currentId, setCurrentId, userAPI }) => {
   const oneToDo = useSelector((state) =>
     currentId ? state.toDos.find((el) => el.id === currentId) : null
   );
+
   const dispatch = useDispatch();
 
-  const [toDo, setToDo] = useState("");
+  const [toDo, setToDo] = useState({
+    title: "",
+    message: "",
+  });
 
   useEffect(() => {
-    if (oneToDo) setToDo(oneToDo.toDo);
+    // console.log("oneToDo: ", oneToDo);
+    if (oneToDo)
+      setToDo({
+        ...oneToDo,
+        title: oneToDo.title,
+      });
   }, [oneToDo]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (currentId) {
-      dispatch(updateToDo(currentId, toDo));
+      dispatch(updateToDo(userAPI?.userId, currentId, toDo));
     } else {
-      dispatch(addToDo(toDo));
+      dispatch(addToDo(userAPI?.userId, toDo));
     }
+    setTimeout(() => {
+      dispatch(getToDosByUser(userAPI?.userId));
+    }, 500);
     clear();
   };
 
   const clear = () => {
-    setToDo("");
+    setToDo({
+      ...toDo,
+      title: "",
+    });
     setCurrentId(null);
   };
 
@@ -36,8 +51,13 @@ const AddTodo = ({ currentId, setCurrentId }) => {
           type="text"
           name="toDo"
           placeholder="Need to do something ?"
-          value={toDo}
-          onChange={(e) => setToDo(e.target.value)}
+          value={toDo.title}
+          onChange={(e) =>
+            setToDo({
+              ...toDo,
+              title: e.target.value,
+            })
+          }
         />
         <button type="submit">{currentId ? "Update" : "Create"}</button>
       </form>

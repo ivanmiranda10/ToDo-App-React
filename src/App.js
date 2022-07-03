@@ -19,7 +19,7 @@ function App() {
     };
   }, []);
 
-  console.log(user);
+  //   console.log(user);
 
   return (
     <div className="App">
@@ -36,7 +36,7 @@ function App() {
             path="/home"
             element={
               <ProtectedRoute user={user}>
-                <Home />
+                <Home user={user} />
               </ProtectedRoute>
             }
           />
