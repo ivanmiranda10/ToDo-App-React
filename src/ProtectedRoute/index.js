@@ -7,5 +7,4 @@ const ProtectedRoute = ({ children, user }) => {
   }
   return children;
 };
-
 export default ProtectedRoute;

@@ -1,65 +1,20 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addToDo, getToDosByUser, updateToDo } from "./Redux/Actions";
+import React from "react";
+import useForm from "../Hooks/useForm";
+import InputField from "./inputField";
 
-const AddTodo = ({ currentId, setCurrentId, userAPI }) => {
-  const oneToDo = useSelector((state) =>
-    currentId ? state.toDos.find((el) => el.id === currentId) : null
-  );
-
-  const dispatch = useDispatch();
-
-  const [toDo, setToDo] = useState({
-    title: "",
-    message: "",
-  });
-
-  useEffect(() => {
-    // console.log("oneToDo: ", oneToDo);
-    if (oneToDo)
-      setToDo({
-        ...oneToDo,
-        title: oneToDo.title,
-      });
-  }, [oneToDo]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (currentId) {
-      dispatch(updateToDo(userAPI?.userId, currentId, toDo));
-    } else {
-      dispatch(addToDo(userAPI?.userId, toDo));
-    }
-    setTimeout(() => {
-      dispatch(getToDosByUser(userAPI?.userId));
-    }, 500);
-    clear();
-  };
-
-  const clear = () => {
-    setToDo({
-      ...toDo,
-      title: "",
-    });
-    setCurrentId(null);
-  };
+const AddTodo = ({ userAPI }) => {
+  const { toDo, handleChange, handleSubmit } = useForm();
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
+      <form onSubmit={(e) => handleSubmit(e, userAPI)}>
+        <InputField
           name="toDo"
           placeholder="Need to do something ?"
           value={toDo.title}
-          onChange={(e) =>
-            setToDo({
-              ...toDo,
-              title: e.target.value,
-            })
-          }
+          onChange={handleChange}
         />
-        <button type="submit">{currentId ? "Update" : "Create"}</button>
+        <button type="submit">Create</button>
       </form>
     </div>
   );

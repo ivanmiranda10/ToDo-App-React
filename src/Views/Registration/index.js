@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import useRegister from "./useRegister";
+import useRegister from "../../Hooks/useRegister";
+import InputField from "../../Components/inputField";
 
 const Register = () => {
   const {
@@ -9,6 +10,7 @@ const Register = () => {
     handleRegisterSubmit,
     handleLoginSubmit,
   } = useRegister();
+
   const [logged, setLogged] = useState(false);
 
   const listOfUsers = useSelector((state) => state.users);
@@ -19,15 +21,13 @@ const Register = () => {
   return (
     <div>
       <form onSubmit={!logged ? handleRegisterSubmit : handleLoginSubmit}>
-        <input
-          type="text"
+        <InputField
           name="email"
           placeholder="Email..."
           value={currentUser.email}
           onChange={handleInputChange}
         />
-        <input
-          type="text"
+        <InputField
           name="password"
           placeholder="Password..."
           value={currentUser.password}

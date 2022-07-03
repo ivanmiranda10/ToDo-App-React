@@ -1,13 +1,11 @@
 import {
   GET_TODOS,
-  ADD_TODO,
   DELETE_TODO,
-  UPDATE_TODO,
   COMPLETE_TODO,
   FILTER_BY_COMPLETE,
   CLEAR_ALL,
   GET_USER,
-} from "../Actions";
+} from "../Actions/constants";
 
 const usersFromLocalStorage = JSON.parse(
   localStorage.getItem("localUsers") || "[]"
@@ -15,6 +13,7 @@ const usersFromLocalStorage = JSON.parse(
 
 const initialState = {
   toDos: [],
+  toDosForFiltering: [],
   users: usersFromLocalStorage,
 };
 
@@ -29,12 +28,8 @@ const toDos = (state = initialState, action) => {
       return {
         ...state,
         toDos: [...action.payload],
+        toDosForFiltering: [...action.payload],
       };
-    // case ADD_TODO:
-    //   return {
-    //     ...state,
-    //     toDos: [...state.toDos, action.payload],
-    //   };
     case DELETE_TODO:
       return {
         ...state,
@@ -46,22 +41,17 @@ const toDos = (state = initialState, action) => {
         toDos: state.toDos.map((toDo) =>
           toDo.id === action.payload.id ? { ...action.payload } : toDo
         ),
-      };
-    case UPDATE_TODO:
-      return {
-        ...state,
-        // toDos: state.toDos.map((el) =>
-        //   el.id === action.payload.id ? action.payload : el
-        // ),
-        toDos: [...state.toDos, action.payload],
+        toDosForFiltering: state.toDosForFiltering.map((toDo) =>
+          toDo.id === action.payload.id ? { ...action.payload } : toDo
+        ),
       };
     case FILTER_BY_COMPLETE:
+      const arrayCopy = state.toDosForFiltering;
       return {
         ...state,
-        // toDos: state.toDos.filter(
-        //   (todo) => todo.completed === action.payload.completed
-        // ),
-        toDos: [...action.payload],
+        toDos: arrayCopy.filter((el) =>
+          action.payload.value === "completed" ? el.completed : !el.completed
+        ),
       };
     case CLEAR_ALL:
       return {

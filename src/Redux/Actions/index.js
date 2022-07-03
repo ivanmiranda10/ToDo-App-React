@@ -1,15 +1,13 @@
 import axios from "axios";
-
-export const API_URL = "https://api-3sxs63jhua-uc.a.run.app/v1";
-
-export const GET_TODOS = "GET_TODOS";
-export const GET_USER = "GET_USER";
-export const ADD_TODO = "ADD_TODO";
-export const DELETE_TODO = "DELETE_TODO";
-export const UPDATE_TODO = "UPDATE_TODO";
-export const COMPLETE_TODO = "COMPLETE_TODO";
-export const FILTER_BY_COMPLETE = "FILTER_BY_COMPLETE";
-export const CLEAR_ALL = "CLEAR_ALL";
+import {
+  API_URL,
+  GET_USER,
+  GET_TODOS,
+  DELETE_TODO,
+  COMPLETE_TODO,
+  CLEAR_ALL,
+  FILTER_BY_COMPLETE,
+} from "./constants";
 
 export const getUserId = (user) => {
   return async function (dispatch) {
@@ -53,18 +51,6 @@ export function addToDo(userId, toDo) {
   };
 }
 
-// export const addToDo = (toDo) => {
-//   console.log("addToDo Action: ", toDo);
-//   return {
-//     type: ADD_TODO,
-//     payload: {
-//       id: nanoid(),
-//       toDo,
-//       completed: false,
-//     },
-//   };
-// };
-
 export function deleteToDo(userId, todoId) {
   //   console.log("deleteToDo - userId: ", userId);
   //   console.log("deleteToDo - todoId: ", todoId);
@@ -78,14 +64,6 @@ export function deleteToDo(userId, todoId) {
     }
   };
 }
-
-// export const deleteToDo = (id) => {
-//   console.log("deleteToDo Action: ", id);
-//   return {
-//     type: DELETE_TODO,
-//     payload: id,
-//   };
-// };
 
 export function completeTodo(userId, item) {
   //   console.log("completeToDo Action: ", userId, item);
@@ -112,50 +90,6 @@ export function completeTodo(userId, item) {
   };
 }
 
-// export const completeTodo = (id) => {
-//   console.log("complete toDo: ", id);
-//   return {
-//     type: COMPLETE_TODO,
-//     payload: id,
-//   };
-// };
-
-// export const updateToDo = (id, toDo) => {
-//   console.log("updateToDo Action: ", id, toDo);
-//   return {
-//     type: UPDATE_TODO,
-//     payload: { id, ...toDo },
-//   };
-// };
-
-export const updateToDo = (userId, currentTodoID, toDo) => {
-  return async function (dispatch) {
-    const currentTitle = toDo.title;
-    // const currentID = toDo.id;
-    // const currentComplete = toDo.completed;
-    axios
-      .delete(`${API_URL}/todo/${userId}`, {
-        data: { todoId: currentTodoID },
-      })
-      .then((resp) => {
-        if (resp) {
-          axios.post(`${API_URL}/todo/${userId}`, {
-            // id: currentID
-            title: currentTitle,
-            message: "",
-            // completed: currentComplete
-          });
-        } else {
-          console.log("no llego al post");
-        }
-      })
-      .then((toDoUpdated) => {
-        return dispatch({ type: UPDATE_TODO, payload: toDoUpdated });
-      })
-      .catch((err) => console.log("error de catcheo: ", err));
-  };
-};
-
 export const clearAll = (userId) => {
   return async function (dispatch) {
     await axios.delete(`${API_URL}/todo/${userId}/reset`);
@@ -163,13 +97,16 @@ export const clearAll = (userId) => {
   };
 };
 
-export const filterByComplete = (userId, completed) => {
+export const filterByComplete = (userId, completed, value) => {
   return async function (dispatch) {
     try {
       const { data } = await axios.get(
         `${API_URL}/todo/${userId}/${completed}`
       );
-      return dispatch({ type: FILTER_BY_COMPLETE, payload: data });
+      return dispatch({
+        type: FILTER_BY_COMPLETE,
+        payload: { value, ...data },
+      });
     } catch (error) {
       console.log(error);
     }

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { auth } from "./Components/Firabase/firabase-config";
+import { auth } from "./Authentication/firabase-config";
 import { onAuthStateChanged } from "firebase/auth";
-import Home from "./Components/Home";
-import Register from "./Components/Firabase/Register";
-import ProtectedRoute from "./Components/protectedRoute";
+import Home from "./Views/Home";
+import Register from "./Views/Registration";
+import ProtectedRoute from "./ProtectedRoute";
 import "./App.css";
 
 function App() {
@@ -18,8 +18,6 @@ function App() {
       userSubscribe();
     };
   }, []);
-
-  //   console.log(user);
 
   return (
     <div className="App">
