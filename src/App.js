@@ -20,26 +20,27 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>{`Welcome ${user ? user?.email : ""} !`}</h1>
-        <Routes>
-          <Route
-            path="/"
-            element={<Navigate to={!user ? "/login" : "/home"} />}
-          />
-          <Route exact path="/login" element={<Register />} />
-          <Route
-            exact
-            path="/home"
-            element={
-              <ProtectedRoute user={user}>
-                <Home user={user} />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
-      </header>
+    <div className="global">
+      <Routes>
+        <Route
+          path="/"
+          element={<Navigate to={!user ? "/login" : "/home"} />}
+        />
+        <Route exact path="/login" element={<Register />} />
+        <Route
+          exact
+          path="/home"
+          element={
+            <ProtectedRoute user={user}>
+              <Home user={user} />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="*"
+          element={<Navigate to={!user ? "/login" : "/home"} />}
+        />
+      </Routes>
     </div>
   );
 }

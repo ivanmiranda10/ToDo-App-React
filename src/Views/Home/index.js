@@ -1,15 +1,19 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import AddTodo from "../../Components/addTodo";
-import Options from "../../Components/options";
+import AddTodo from "../../Components/createTodo/addTodo";
 import LogoutButton from "../../Authentication/Logout";
+import Header from "../../Components/Header";
 import { getToDosByUser } from "../../Redux/Actions";
-import TodoList from "./todoList";
 
 const Home = ({ user }) => {
   const userAPI = useSelector((state) =>
     state.users?.find((el) => el.email === user.email)
   );
+
+  const listOfUsers = useSelector((state) => state.users);
+  useEffect(() => {
+    localStorage.setItem("localUsers", JSON.stringify(listOfUsers));
+  }, [listOfUsers]);
 
   const dispatch = useDispatch();
 
@@ -18,20 +22,17 @@ const Home = ({ user }) => {
     console.log("Current User: ", userAPI);
   }, [dispatch, userAPI]);
 
-  const listOfUsers = useSelector((state) => state.users);
+  const listOfToDos = useSelector((state) => state.toDos);
+
   useEffect(() => {
-    localStorage.setItem("localUsers", JSON.stringify(listOfUsers));
-  }, [listOfUsers]);
+    console.log("toDos: ", listOfToDos);
+  }, [listOfToDos]);
 
   return (
     <>
-      <div>
-        <LogoutButton />
-        <h1>To-Do App</h1>
-        <Options userAPI={userAPI} />
-        <AddTodo userAPI={userAPI} />
-        <TodoList userAPI={userAPI} />
-      </div>
+      <LogoutButton />
+      <Header listOfToDos={listOfToDos} userAPI={userAPI} />
+      <AddTodo userAPI={userAPI} listOfToDos={listOfToDos} />
     </>
   );
 };

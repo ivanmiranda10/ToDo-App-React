@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import useRegister from "../../Hooks/useRegister";
-import InputField from "../../Components/inputField";
+import {
+  RegisterPageContainer,
+  InputsContainer,
+  Input,
+  SubmitButtonContainer,
+  SubmitButton,
+  LoginButton,
+} from "./style";
+import LogoPoincenot from "../../Utils/logo-poincenot.svg";
 
 const Register = () => {
   const {
@@ -19,31 +27,43 @@ const Register = () => {
   }, []);
 
   return (
-    <div>
-      <form onSubmit={!logged ? handleRegisterSubmit : handleLoginSubmit}>
-        <InputField
-          name="email"
-          placeholder="Email..."
-          value={currentUser.email}
-          onChange={handleInputChange}
-        />
-        <InputField
-          name="password"
-          placeholder="Password..."
-          value={currentUser.password}
-          onChange={handleInputChange}
-        />
-        <button type="submit">{logged ? "Login" : "Register"}</button>
+    <RegisterPageContainer>
+      <img src={LogoPoincenot} alt="logo" height="100px" />
+      <form
+        onSubmit={!logged ? handleRegisterSubmit : handleLoginSubmit}
+        autoComplete="off"
+      >
+        <InputsContainer>
+          <Input
+            type="text"
+            name="email"
+            placeholder="Email..."
+            value={currentUser.email}
+            onChange={handleInputChange}
+          />
+          <Input
+            type="text"
+            name="password"
+            placeholder="Contraseña..."
+            value={currentUser.password}
+            onChange={handleInputChange}
+          />
+          <SubmitButtonContainer>
+            <SubmitButton type="submit">
+              {logged ? "Login" : "Registrarse"}
+            </SubmitButton>
+          </SubmitButtonContainer>
+        </InputsContainer>
       </form>
       {!logged ? (
         <p>
-          Have an account already?{" "}
-          <button onClick={() => setLogged(true)}>Login</button>
+          Ya tenes una cuenta?{" "}
+          <LoginButton onClick={() => setLogged(true)}>Login</LoginButton>
         </p>
       ) : (
-        <button onClick={() => setLogged(false)}>Go Back</button>
+        <LoginButton onClick={() => setLogged(false)}>Volver</LoginButton>
       )}
-    </div>
+    </RegisterPageContainer>
   );
 };
 

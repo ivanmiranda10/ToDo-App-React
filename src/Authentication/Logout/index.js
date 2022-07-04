@@ -1,5 +1,6 @@
 import { auth } from "../firabase-config";
 import { signOut } from "firebase/auth";
+import { Nav, NavContainer, ButtonContainer, Button } from "./styles";
 
 const logout = async () => {
   await signOut(auth);
@@ -7,9 +8,13 @@ const logout = async () => {
 
 const LogoutButton = () => {
   return (
-    <div>
-      <button onClick={logout}>Logout</button>
-    </div>
+    <Nav>
+      <NavContainer>
+        <ButtonContainer>
+          <Button onClick={logout}>Log out</Button>
+        </ButtonContainer>
+      </NavContainer>
+    </Nav>
   );
 };
 

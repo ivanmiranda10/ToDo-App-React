@@ -1,14 +1,16 @@
 import React from "react";
+import { Input } from "./styles";
 
-const InputField = ({ type = "text", name, placeholder, value, onChange }) => {
+const InputField = ({ type, name, placeholder, value, onChange, ...props }) => {
   return (
     <>
-      <input
+      <Input
         type={type}
         name={name}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        {...props}
       />
     </>
   );

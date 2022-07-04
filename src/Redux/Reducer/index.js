@@ -27,8 +27,8 @@ const toDos = (state = initialState, action) => {
     case GET_TODOS:
       return {
         ...state,
-        toDos: [...action.payload],
-        toDosForFiltering: [...action.payload],
+        toDos: action.payload,
+        toDosForFiltering: action.payload,
       };
     case DELETE_TODO:
       return {

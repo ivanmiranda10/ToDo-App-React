@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addToDo, getToDosByUser } from "../Redux/Actions";
 
@@ -7,7 +7,7 @@ const useForm = () => {
 
   const [toDo, setToDo] = useState({
     title: "",
-    message: "",
+    message: `toDo posted on ${new Date().toString().substring(0, 10)}`,
   });
 
   const handleChange = (e) => {
@@ -26,7 +26,9 @@ const useForm = () => {
 
   const handleSubmit = (e, userAPI) => {
     e.preventDefault();
-    dispatch(addToDo(userAPI?.userId, toDo));
+    toDo.title.length >= 1
+      ? dispatch(addToDo(userAPI?.userId, toDo))
+      : alert("Escribi una tarea primero");
     setTimeout(() => {
       dispatch(getToDosByUser(userAPI?.userId));
     }, 500);
