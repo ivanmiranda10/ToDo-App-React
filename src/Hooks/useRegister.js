@@ -27,7 +27,7 @@ const useRegister = () => {
 
   const handleRegisterSubmit = (e) => {
     e.preventDefault();
-    dispatch(getUserId(currentUser));
+    email.length && password.length >= 6 && dispatch(getUserId(currentUser));
     registration(auth, email, password, navigate);
   };
 

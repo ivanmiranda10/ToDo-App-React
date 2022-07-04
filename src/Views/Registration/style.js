@@ -67,3 +67,9 @@ export const LoginButton = styled.button`
     cursor: pointer;
   }
 `;
+
+export const Error = styled.p`
+  font-size: 12px;
+  color: red;
+  text-align: center;
+`;

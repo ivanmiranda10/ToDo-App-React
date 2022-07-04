@@ -8,6 +8,7 @@ import {
   SubmitButtonContainer,
   SubmitButton,
   LoginButton,
+  Error,
 } from "./style";
 import LogoPoincenot from "../../Utils/logo-poincenot.svg";
 
@@ -48,6 +49,10 @@ const Register = () => {
             value={currentUser.password}
             onChange={handleInputChange}
           />
+          <Error>
+            {currentUser.password.length < 6 &&
+              "La contraseña debe tener al menos 6 caracteres"}
+          </Error>
           <SubmitButtonContainer>
             <SubmitButton type="submit">
               {logged ? "Login" : "Registrarse"}
