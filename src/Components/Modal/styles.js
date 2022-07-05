@@ -7,10 +7,15 @@ export const ClearAllButton = styled(motion.button)`
   border: none;
   display: flex;
   align-items: center;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const Icon = styled(BsPlusCircleFill)`
   font-size: 1.1rem;
+  margin-top: 5px;
 `;
 
 export const ModalContainer = styled(motion.div)`

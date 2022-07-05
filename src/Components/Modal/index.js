@@ -12,7 +12,7 @@ const ButtonModal = ({ userAPI }) => {
   return (
     <div>
       <ClearAllButton
-        whileHover={{ scale: 1.1 }}
+        whileHover={{ scale: 1.2 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => (modalOpen ? close() : open())}
         type="button"

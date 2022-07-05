@@ -23,6 +23,6 @@ export const SubmitButton = styled.button`
     cursor: pointer;
     background: #000;
     color: #fcfcfc;
-    transition: 0.3s ease-in-out;
+    transition: all ease-in-out 0.3s;
   }
 `;
